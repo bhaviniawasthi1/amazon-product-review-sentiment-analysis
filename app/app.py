@@ -29,6 +29,8 @@ def preprocess_text(text):
 def home():
 
     prediction = None
+    confidence = None
+    review = ""
 
     if request.method == "POST":
 
@@ -40,9 +42,15 @@ def home():
 
         prediction = model.predict(vector)[0]
 
+        probabilities = model.predict_proba(vector)[0]
+
+        confidence = round(max(probabilities) * 100, 2)
+
     return render_template(
         "index.html",
-        prediction=prediction
+        prediction=prediction,
+        confidence=confidence,
+        review=review
     )
 
 if __name__ == "__main__":

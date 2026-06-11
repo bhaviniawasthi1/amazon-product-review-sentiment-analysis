@@ -1,34 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Amazon Product Review Sentiment Analysis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
+<div class="container">
+
     <h1>Amazon Product Review Sentiment Analysis</h1>
+
+    <p class="subtitle">
+        Analyze customer reviews using NLP and Machine Learning
+    </p>
+
+    <div class="stats">
+    
+        <div class="stat-box">
+            <h3>100K+</h3>
+            <p>Reviews</p>
+        </div>
+    
+        <div class="stat-box">
+            <h3>85.38%</h3>
+            <p>Accuracy</p>
+        </div>
+    
+        <div class="stat-box">
+            <h3>4</h3>
+            <p>Models Compared</p>
+        </div>
+    
+    </div>
+
+    <div class="examples">
+
+        <h3>Try Examples</h3>
+
+        <ul>
+        
+            <li onclick="fillReview('This product is amazing and worth every penny')">
+                ⭐ This product is amazing and worth every penny
+            </li>
+        
+            <li onclick="fillReview('The product is okay and does what it is supposed to do')">
+                ⭐ The product is okay and does what it is supposed to do
+            </li>
+        
+            <li onclick="fillReview('Worst purchase ever. Completely disappointed')">
+                ⭐ Worst purchase ever. Completely disappointed
+            </li>
+        
+        </ul>
+    </div>
 
     <form method="POST">
 
         <textarea
-            name="review"
-            rows="10"
-            cols="60"
-            placeholder="Enter your review here"></textarea>
-
-        <br><br>
+                name="review"
+                placeholder="Enter your review here..."
+        >{{ review if review else '' }}</textarea>
 
         <button type="submit">
-            Predict Sentiment
+            Analyze Sentiment
         </button>
 
-        {% if prediction %}
-        
-        <h2>
-            Predicted Sentiment: {{ prediction }}
-        </h2>
-        
-        {% endif %}
     </form>
+
+    {% if prediction %}
+
+    <div class="result
+    
+    {% if prediction == 'Positive' %}
+    positive
+    {% elif prediction == 'Negative' %}
+    negative
+    {% else %}
+    neutral
+    {% endif %}
+    
+    ">
+
+        <h2>
+
+            {% if prediction == "Positive" %}
+                🟢 Positive
+            {% elif prediction == "Negative" %}
+                🔴 Negative
+            {% else %}
+                🟡 Neutral
+            {% endif %}
+
+        </h2>
+
+        <p>
+            Confidence: {{ confidence }}%
+        </p>
+
+        <div class="progress-bar">
+
+            <div class="progress-fill" style="
+            width: {{ confidence }}%;
+            
+            background:
+            {% if prediction == 'Positive' %}
+            linear-gradient(135deg,#22c55e,#16a34a);
+            {% elif prediction == 'Negative' %}
+            linear-gradient(135deg,#ef4444,#dc2626);
+            {% else %}
+            linear-gradient(135deg,#facc15,#eab308);
+            {% endif %}
+            ">
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <footer>
+    
+        <p>
+            Built by Bhavini Awasthi
+        </p>
+    
+        <p>
+            Amazon Product Review Sentiment Analysis using NLP & Machine Learning
+        </p>
+    
+        <div class="social-links">
+    
+            <a href="https://github.com/bhaviniawasthi1" target="_blank">
+                GitHub
+            </a>
+    
+            <a href="https://www.linkedin.com/in/bhaviniawasthi/" target="_blank">
+                LinkedIn
+            </a>
+    
+        </div>
+    
+    </footer>
+
+</div>
+
+<script>
+
+function fillReview(text) {
+
+    document.querySelector("textarea").value = text;
+
+}
+
+</script>
 
 </body>
 </html>
