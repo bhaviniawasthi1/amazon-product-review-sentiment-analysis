@@ -1,4 +1,5 @@
 import joblib
+import nltk
 import re
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -7,6 +8,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 model = joblib.load("../models/sentiment_model.pkl")
 vectorizer = joblib.load("../models/tfidf_vectorizer.pkl")
+
+nltk.download("stopwords")
 
 stop_words = set(stopwords.words("english"))
 stemmer = PorterStemmer()
@@ -54,4 +57,4 @@ def home():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
